@@ -1,0 +1,108 @@
+:root {
+  --fluxr-green: #2be878;
+  --fluxr-green-strong: #19d766;
+  --fluxr-deep-green: #064e3b;
+  --fluxr-bg-dark: #0a1411;
+  --fluxr-surface-dark: #111c18;
+  --fluxr-border-dark: #1e3028;
+  --fluxr-text-dark: #e8f3ee;
+  --fluxr-muted-dark: #a3bab0;
+  --vp-c-brand-1: var(--fluxr-green);
+  --vp-c-brand-2: var(--fluxr-green-strong);
+  --vp-c-brand-3: #0fd35d;
+  --vp-c-brand-soft: rgba(43, 232, 120, 0.16);
+}
+
+:root {
+  --vp-c-bg: #f5f8f6;
+  --vp-c-bg-alt: #edf3ef;
+  --vp-c-bg-soft: #e4efe9;
+  --vp-c-border: #d8e6dd;
+  --vp-c-text-1: #0e1b16;
+  --vp-c-text-2: #2f453b;
+  --vp-c-text-3: #4a6257;
+}
+
+.dark {
+  --vp-c-bg: var(--fluxr-bg-dark);
+  --vp-c-bg-alt: #0d1814;
+  --vp-c-bg-soft: var(--fluxr-surface-dark);
+  --vp-c-border: var(--fluxr-border-dark);
+  --vp-c-text-1: var(--fluxr-text-dark);
+  --vp-c-text-2: #c8dad1;
+  --vp-c-text-3: var(--fluxr-muted-dark);
+  --vp-home-hero-name-color: var(--fluxr-green);
+  --vp-home-hero-image-background-image: radial-gradient(circle at 30% 20%, rgba(43, 232, 120, 0.35), rgba(9, 24, 20, 0.1));
+  --vp-home-hero-image-filter: blur(54px);
+  --vp-code-block-bg: #0e1915;
+  --vp-code-copy-code-bg: #13221c;
+}
+
+.VPNavBar {
+  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, transparent);
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.VPDoc a,
+.VPNavBarMenuLink.active,
+.VPSidebarItem.is-active > .item > .link {
+  font-weight: 600;
+}
+
+.VPDoc h1,
+.VPDoc h2,
+.VPDoc h3 {
+  letter-spacing: -0.02em;
+}
+
+.fluxr-hero {
+  border: 1px solid var(--vp-c-border);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--vp-c-bg-soft) 92%, transparent), color-mix(in srgb, var(--vp-c-bg) 96%, transparent));
+  border-radius: 18px;
+  padding: 1.25rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.fluxr-tag {
+  display: inline-block;
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 40%, var(--vp-c-border));
+  background: color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-right: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.endpoint-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-right: 0.5rem;
+}
+
+.endpoint-post {
+  background: rgba(43, 232, 120, 0.2);
+  color: #9af4c0;
+  border: 1px solid rgba(43, 232, 120, 0.36);
+}
+
+.endpoint-get {
+  background: rgba(68, 181, 255, 0.18);
+  color: #9dd2ff;
+  border: 1px solid rgba(68, 181, 255, 0.35);
+}
+
+.vp-doc table {
+  font-size: 0.92rem;
+}
+
+.vp-doc tr:nth-child(2n) {
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 42%, transparent);
+}
