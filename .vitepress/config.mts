@@ -8,7 +8,7 @@ export default defineConfig({
   lastUpdated: false,
   themeConfig: {
     logo: '/fluxr-logo.png',
-    siteTitle: 'Fluxr API',
+    siteTitle: 'API',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'API Overview', link: '/api/' },
