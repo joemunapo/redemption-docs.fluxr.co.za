@@ -106,15 +106,13 @@ $body = $response->json();
   "data": {
     "items": [
       {
-        "id": 501,
         "uuid": "da6c3d8e-3e15-4f30-bf5a-5ca40f0e7e31",
+        "type": "deposit",
         "amount": 92,
         "received": 92,
         "commission": 0,
         "currency": "ZAR",
         "status": "paid",
-        "processor_id": null,
-        "batch": null,
         "meta": {
           "name": "Voucher redemption credit",
           "provider": "ott",
