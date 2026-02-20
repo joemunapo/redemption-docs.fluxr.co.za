@@ -10,7 +10,7 @@ Create a redemption request.
 
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `voucher_code` | string | Yes | Voucher PIN/code to redeem. |
+| `voucher_code` | string | Yes | Voucher PIN/code to redeem (`12-16` digits, numbers only). |
 
 ### Example Request
 
@@ -66,7 +66,6 @@ $body = $response->json();
     "currency": "ZAR",
     "status": "success",
     "provider_reference": "OTT-REF-123",
-    "redeemed_at": "2026-02-19T10:00:02.000000Z",
     "created_at": "2026-02-19T10:00:00.000000Z"
   }
 }
@@ -74,12 +73,41 @@ $body = $response->json();
 
 ### Error Response Example (`422`)
 
+Use `GET /api/v1/redemptions/{id}` to retrieve transaction details.
+
 ```json
 {
   "success": false,
-  "message": "The voucher has already been used.",
+  "message": "Already redeemed.",
   "errors": {
     "provider": ["ALREADY_REDEEMED"]
+  }
+}
+```
+
+### Validation Error Example (`422`)
+
+```json
+{
+  "message": "Voucher code must be 12 to 16 digits (numbers only), for example 123456789012.",
+  "errors": {
+    "voucher_code": [
+      "Voucher code must be 12 to 16 digits (numbers only), for example 123456789012."
+    ]
+  }
+}
+```
+
+### Provider Unavailable Example (`422`)
+
+```json
+{
+  "success": false,
+  "message": "OTT provider is currently unavailable. Please try again later.",
+  "errors": {
+    "provider": [
+      "PROVIDER_DOWN"
+    ]
   }
 }
 ```

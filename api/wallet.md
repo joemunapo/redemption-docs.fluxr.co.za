@@ -42,7 +42,6 @@ $body = $response->json();
   "success": true,
   "message": "OK",
   "data": {
-    "user_id": 10,
     "currency": "ZAR",
     "balance": 92,
     "pending_balance": 0,

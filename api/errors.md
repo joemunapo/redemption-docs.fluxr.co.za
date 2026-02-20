@@ -18,7 +18,7 @@
 | --- | --- | --- |
 | `INVALID_VOUCHER` | `422` | Voucher is invalid, expired, malformed, or not found. |
 | `ALREADY_REDEEMED` | `422` | Voucher has already been used. |
-| `PROVIDER_DOWN` | `422` or `502` | Provider unavailable or temporary upstream failure. |
+| `PROVIDER_DOWN` | `422` or `502` | Provider unavailable or temporary upstream failure. Client-facing messages are sanitized (for example: `OTT provider is currently unavailable. Please try again later.`). |
 | `FORBIDDEN` | `403` | Access is not allowed for the requested operation. |
 
 ## Validation Payload Example
