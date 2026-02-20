@@ -1,6 +1,7 @@
 # Fluxr Redemption API
 
-<img src="/fluxr-logo.png" alt="Fluxr" style="max-width: 240px; margin: 0 0 0.75rem;" />
+<img src="/fluxr-logo.png" alt="Fluxr" class="fluxr-docs-logo fluxr-docs-logo-light" />
+<img src="/fluxr-logo-white.png" alt="Fluxr" class="fluxr-docs-logo fluxr-docs-logo-dark" />
 
 <div class="fluxr-hero">
   <p><strong>Vendor integration documentation</strong> for redeeming OTT, 1Voucher (Flash), and BluVoucher vouchers, and reconciling wallet activity.</p>

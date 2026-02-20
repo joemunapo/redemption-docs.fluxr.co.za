@@ -2,6 +2,25 @@
 
 Use this section to submit vouchers and retrieve redemption history.
 
+## Redemption Object
+
+`/api/v1/redemptions` responses use the fields defined by `VoucherRedemptionResource`.
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `id` | integer | Redemption ID. |
+| `provider` | string | Voucher provider (for example `ott`, `onevoucher`, `bluvoucher`). |
+| `voucher_code_last4` | string | Last 4 characters of the voucher code. |
+| `face_value` | number | Original voucher value. |
+| `platform_fee` | number | Platform fee charged for the redemption. |
+| `net_amount` | number | Net value credited after fees. |
+| `currency` | string | ISO currency code, for example `ZAR`. |
+| `status` | string | Redemption status (`pending`, `success`, `failed`, `reversed`). |
+| `provider_reference` | string\|null | Provider transaction reference when available. |
+| `created_at` | string\|null | ISO-8601 UTC timestamp. |
+| `error_code` | string\|null | Included only when `status` is `failed`. |
+| `error_message` | string\|null | Included only when `status` is `failed`. |
+
 ## <span class="endpoint-badge endpoint-post">POST</span>`/api/v1/redemptions`
 
 Create a redemption request.
@@ -52,7 +71,7 @@ $body = $response->json();
 
 - `201` Created
 - `200` OK
-- `202` Accepted (processing state)
+- `202` Accepted (pending confirmation)
 
 ```json
 {
@@ -63,6 +82,8 @@ $body = $response->json();
     "provider": "ott",
     "voucher_code_last4": "9012",
     "face_value": 100,
+    "platform_fee": 2,
+    "net_amount": 98,
     "currency": "ZAR",
     "status": "success",
     "provider_reference": "OTT-REF-123",
@@ -73,14 +94,14 @@ $body = $response->json();
 
 ### Error Response Example (`422`)
 
-Use `GET /api/v1/redemptions/{id}` to retrieve transaction details.
-
 ```json
 {
   "success": false,
   "message": "Already redeemed.",
   "errors": {
-    "provider": ["ALREADY_REDEEMED"]
+    "provider": [
+      "ALREADY_REDEEMED"
+    ]
   }
 }
 ```
@@ -168,12 +189,39 @@ $body = $response->json();
   "success": true,
   "message": "OK",
   "data": {
-    "items": [],
+    "items": [
+      {
+        "id": 123,
+        "provider": "ott",
+        "voucher_code_last4": "9012",
+        "face_value": 100,
+        "platform_fee": 2,
+        "net_amount": 98,
+        "currency": "ZAR",
+        "status": "success",
+        "provider_reference": "OTT-REF-123",
+        "created_at": "2026-02-19T10:00:00.000000Z"
+      },
+      {
+        "id": 124,
+        "provider": "onevoucher",
+        "voucher_code_last4": "3344",
+        "face_value": 50,
+        "platform_fee": 1,
+        "net_amount": 49,
+        "currency": "ZAR",
+        "status": "failed",
+        "provider_reference": null,
+        "created_at": "2026-02-19T11:00:00.000000Z",
+        "error_code": "INVALID_VOUCHER",
+        "error_message": "Voucher is invalid or expired."
+      }
+    ],
     "meta": {
       "current_page": 1,
       "last_page": 1,
       "per_page": 20,
-      "total": 0
+      "total": 2
     }
   }
 }
@@ -187,7 +235,7 @@ Fetch one redemption record by ID.
 
 | Parameter | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `id` | integer|string | Yes | Redemption ID |
+| `id` | integer\|string | Yes | Redemption ID |
 
 ### Example Request
 
@@ -218,3 +266,24 @@ $body = $response->json();
 ```
 
 :::
+
+### Success Response (`200`)
+
+```json
+{
+  "success": true,
+  "message": "OK",
+  "data": {
+    "id": 123,
+    "provider": "ott",
+    "voucher_code_last4": "9012",
+    "face_value": 100,
+    "platform_fee": 2,
+    "net_amount": 98,
+    "currency": "ZAR",
+    "status": "success",
+    "provider_reference": "OTT-REF-123",
+    "created_at": "2026-02-19T10:00:00.000000Z"
+  }
+}
+```

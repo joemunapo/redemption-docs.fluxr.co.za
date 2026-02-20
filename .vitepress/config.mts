@@ -7,7 +7,10 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: false,
   themeConfig: {
-    logo: '/fluxr-logo.png',
+    logo: {
+      light: '/fluxr-logo.png',
+      dark: '/fluxr-logo-white.png',
+    },
     siteTitle: 'API',
     nav: [
       { text: 'Home', link: '/' },

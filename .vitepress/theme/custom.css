@@ -56,6 +56,23 @@
   letter-spacing: -0.02em;
 }
 
+.fluxr-docs-logo {
+  max-width: 240px;
+  margin: 0 0 0.75rem;
+}
+
+.fluxr-docs-logo-dark {
+  display: none;
+}
+
+.dark .fluxr-docs-logo-light {
+  display: none;
+}
+
+.dark .fluxr-docs-logo-dark {
+  display: block;
+}
+
 .fluxr-hero {
   border: 1px solid var(--vp-c-border);
   background: linear-gradient(145deg, color-mix(in srgb, var(--vp-c-bg-soft) 92%, transparent), color-mix(in srgb, var(--vp-c-bg) 96%, transparent));
