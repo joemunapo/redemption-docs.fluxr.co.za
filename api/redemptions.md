@@ -9,7 +9,7 @@ Use this section to submit vouchers and retrieve redemption history.
 | Field | Type | Notes |
 | --- | --- | --- |
 | `id` | integer | Redemption ID. |
-| `provider` | string | Voucher provider (for example `ott`, `onevoucher`, `bluvoucher`). |
+| `provider` | string | Voucher provider (`ott`, `onevoucher`, `bluvoucher`, `standard_bank`, `nedbank`, `capitec`). |
 | `voucher_code_last4` | string | Last 4 characters of the voucher code. |
 | `face_value` | number | Original voucher value. |
 | `platform_fee` | number | Platform fee charged for the redemption. |
@@ -29,7 +29,9 @@ Create a redemption request.
 
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `voucher_code` | string | Yes | Voucher PIN/code to redeem (`12-16` digits, numbers only). |
+| `voucher_code` | string | Yes | Voucher PIN/code to redeem. Default flow requires `12-16` digits; explicit bank providers allow `8-16` digits. |
+| `provider` | string | No | Optional explicit provider. Allowed values: `standard_bank`, `nedbank`, `capitec`. |
+| `pin` | string | Conditional | Required when `provider` is `standard_bank`, `nedbank`, or `capitec`. |
 
 ### Example Request
 
@@ -42,6 +44,18 @@ curl --request POST "{{BASE_URL}}/api/v1/redemptions" \
   --header "Authorization: Bearer {{TOKEN}}" \
   --data '{
     "voucher_code": "123456789012"
+  }'
+```
+
+```bash [cURL - Kazang Bank Cash-Out]
+curl --request POST "{{BASE_URL}}/api/v1/redemptions" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer {{TOKEN}}" \
+  --data '{
+    "voucher_code": "1234567890",
+    "provider": "nedbank",
+    "pin": "1234"
   }'
 ```
 
@@ -59,6 +73,28 @@ $response = Http::baseUrl($baseUrl)
     ->asJson()
     ->post('/api/v1/redemptions', [
         'voucher_code' => '123456789012',
+    ]);
+
+$status = $response->status();
+$body = $response->json();
+```
+
+```php [Laravel (Guzzle) - Kazang Bank Cash-Out]
+<?php
+
+use Illuminate\Support\Facades\Http;
+
+$baseUrl = env('FLUXR_API_BASE_URL', 'https://redemption.fluxr.co.za');
+$token = env('FLUXR_API_TOKEN');
+
+$response = Http::baseUrl($baseUrl)
+    ->withToken($token)
+    ->acceptJson()
+    ->asJson()
+    ->post('/api/v1/redemptions', [
+        'voucher_code' => '1234567890',
+        'provider' => 'nedbank',
+        'pin' => '1234',
     ]);
 
 $status = $response->status();
@@ -110,10 +146,10 @@ $body = $response->json();
 
 ```json
 {
-  "message": "Voucher code must be 12 to 16 digits (numbers only), for example 123456789012.",
+  "message": "Voucher code must be 12 to 16 digits.",
   "errors": {
     "voucher_code": [
-      "Voucher code must be 12 to 16 digits (numbers only), for example 123456789012."
+      "Voucher code must be 12 to 16 digits."
     ]
   }
 }
@@ -142,7 +178,7 @@ List redemption records.
 | Parameter | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `status` | string | No | `pending`, `success`, `failed`, `reversed` |
-| `provider` | string | No | `onevoucher`, `ott`, `bluvoucher` |
+| `provider` | string | No | `onevoucher`, `ott`, `bluvoucher`, `standard_bank`, `nedbank`, `capitec` |
 | `from` | date | No | Start date filter |
 | `to` | date | No | End date filter |
 | `per_page` | integer | No | Default `15`, max `100` |
