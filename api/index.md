@@ -7,6 +7,9 @@ This documentation covers the vendor-facing API under `/api/v1`.
 - OTT
 - 1Voucher (Flash)
 - BluVoucher
+- Standard Bank (Instant Money)
+- Nedbank (CashOut)
+- Capitec
 
 ## Access and Token Management
 

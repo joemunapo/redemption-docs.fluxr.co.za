@@ -4,7 +4,7 @@ Use this section to submit vouchers and retrieve redemption history.
 
 ## Redemption Object
 
-`/api/v1/redemptions` responses use the fields defined by `VoucherRedemptionResource`.
+`/api/v1/redemptions` responses use the following fields.
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -29,9 +29,9 @@ Create a redemption request.
 
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `voucher_code` | string | Yes | Voucher PIN/code to redeem. Default flow requires `12-16` digits; explicit bank providers allow `8-16` digits. |
+| `voucher_code` | string | Yes | Voucher code to redeem. Dashes and spaces are stripped automatically. Default flow requires `12-16` digits; explicit bank providers allow `8-16` digits. |
 | `provider` | string | No | Optional explicit provider. Allowed values: `standard_bank`, `nedbank`, `capitec`. |
-| `pin` | string | Conditional | Required when `provider` is `standard_bank`, `nedbank`, or `capitec`. |
+| `pin` | string | Conditional | Required when `provider` is `standard_bank`, `nedbank`, or `capitec`. Must be at least 4 digits. |
 
 ### Example Request
 
@@ -47,15 +47,15 @@ curl --request POST "{{BASE_URL}}/api/v1/redemptions" \
   }'
 ```
 
-```bash [cURL - Kazang Bank Cash-Out]
+```bash [cURL - Bank Cash-Out]
 curl --request POST "{{BASE_URL}}/api/v1/redemptions" \
   --header "Accept: application/json" \
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer {{TOKEN}}" \
   --data '{
-    "voucher_code": "1234567890",
+    "voucher_code": "14-0408-1950",
     "provider": "nedbank",
-    "pin": "1234"
+    "pin": "9782"
   }'
 ```
 
@@ -79,7 +79,7 @@ $status = $response->status();
 $body = $response->json();
 ```
 
-```php [Laravel (Guzzle) - Kazang Bank Cash-Out]
+```php [Laravel (Guzzle) - Bank Cash-Out]
 <?php
 
 use Illuminate\Support\Facades\Http;
@@ -92,9 +92,9 @@ $response = Http::baseUrl($baseUrl)
     ->acceptJson()
     ->asJson()
     ->post('/api/v1/redemptions', [
-        'voucher_code' => '1234567890',
+        'voucher_code' => '14-0408-1950',
         'provider' => 'nedbank',
-        'pin' => '1234',
+        'pin' => '9782',
     ]);
 
 $status = $response->status();
