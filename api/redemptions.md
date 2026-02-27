@@ -4,7 +4,7 @@ Use this section to submit vouchers and retrieve redemption history.
 
 ## Redemption Object
 
-`/api/v1/redemptions` responses use the following fields.
+`GET /api/v1/redemptions` and `GET /api/v1/redemptions/{id}` return redemptions with the following fields.
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -105,9 +105,8 @@ $body = $response->json();
 
 ### Success Responses
 
-- `201` Created
-- `200` OK
-- `202` Accepted (pending confirmation)
+- `201` Created (new successful redemption)
+- `200` OK (successful retry or re-processed existing attempt)
 
 ```json
 {
@@ -123,7 +122,29 @@ $body = $response->json();
     "currency": "ZAR",
     "status": "success",
     "provider_reference": "OTT-REF-123",
-    "created_at": "2026-02-19T10:00:00.000000Z"
+    "created_at": "2026-02-19T10:00:00.000000Z",
+    "wallet": {
+      "currency": "ZAR",
+      "balance": 98,
+      "pending_balance": 0,
+      "on_hold_balance": 0
+    }
+  }
+}
+```
+
+`POST /api/v1/redemptions` includes `data.wallet` on success so clients can immediately read updated balances.
+
+### Pending Confirmation Example (`409`)
+
+```json
+{
+  "success": false,
+  "message": "Processing / pending confirmation. Don’t retry yet.",
+  "errors": {
+    "provider": [
+      "PENDING_CONFIRMATION"
+    ]
   }
 }
 ```
@@ -160,7 +181,7 @@ $body = $response->json();
 ```json
 {
   "success": false,
-  "message": "OTT provider is currently unavailable. Please try again later.",
+  "message": "Provider is currently unavailable. Please try again later.",
   "errors": {
     "provider": [
       "PROVIDER_DOWN"
